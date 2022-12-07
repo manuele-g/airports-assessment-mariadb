@@ -39,7 +39,7 @@ Bonus: Support retrieving the information given a partial/fuzzy country code/nam
 
 ### To install and run MariaDB with Docker
 
-[Source: MariaDB docker hub](https://hub.docker.com/_/mariadb)
+[Source: MariaDB docker hub](https://hub.docker.com/_/mariadb){:target="_blank"}
 
 To Pull the **mariadb** image:
 
