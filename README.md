@@ -1,4 +1,6 @@
-#Developer Assessment Project
+#Airports Assessment Project
+
+### Simple Spring Boot app with a MariaDB
 
 ##Instructions
 
