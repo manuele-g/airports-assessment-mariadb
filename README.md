@@ -153,5 +153,5 @@ Returns true if this operation is successful
 
 ## Postman Collection
 
-The postman collection is in the project root. [Click here](https://github.com/manuele-g/airports-assessment-mariadb/blob/main/airports.assmnt-mariadb.postman_collection) to see the postman collection.
+The postman collection is in the project root. [Click here](https://github.com/manuele-g/airports-assessment-mariadb/blob/main/airports.assmnt-mariadb.postman_collection.json) to see the postman collection.
 
