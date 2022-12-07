@@ -2,31 +2,35 @@
 
 ### Simple Spring Boot app with a MariaDB
 
-##Instructions
+## Table of contents
+* [General info](#general-info)
+* [Prerequisites](#prerequisites)
+* [Setup](#setup)
 
-<h2>Description</h2>
-<p>The assessment comes with 3 CSV files. The files contain data for countries, airports and runways.
-Write a program that retrieves the following information given the provided files:
-<li>Runways for each airport given a country code or country name.</li>
-<li>Top 10 countries with highest number of airports.</li>
-</p>
+##General info
+### Description
+#### The assessment comes with 3 CSV files. The files contain data for countries, airports and runways.
+#### Write a program that retrieves the following information given the provided files:
+* Runways for each airport given a country code or country name.
+* Top 10 countries with highest number of airports.
+
 <p>Bonus: Support retrieving the information given a partial/fuzzy country code/name as input parameter, e.g. entering 'zimb' will result in 'Zimbabwe'.</p>
 
-<h2>Requirements</h2>
+### Requirements
 <li>The program should be written in Java.</li>
 <li>Write production-ready code.</li>
 <li>Document how to run the application.</li>
 <li>Publish the source code into GitHub (using your own personal account) and share it with us.</li>
 
-#Spring Boot web application
 
-<h2>Prerequisites</h2>
+## Prerequisites
+
 <li>Java 17</li>
 <li>Apache Maven (3.8.6)</li>
 <li>Docker</li>
 <li>MariaDB</li>
 
-<h1>How to prepare the environment</h1>
+## Setup
 <h3>How to install and run MariaDB on Docker</h3>
 <a href="https://hub.docker.com/_/mariadb">MariaDB docker hub</a>
 <p>Running Docker</p>
