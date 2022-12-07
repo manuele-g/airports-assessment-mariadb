@@ -9,7 +9,8 @@
 * [API Documentation](#api-documentation)
 * [Postman Collection](#postman-collection)
 
-##General info
+## General info
+
 **Description**
 
 The assessment comes with 3 CSV files. The files contain data for countries, airports and runways.
@@ -20,12 +21,6 @@ Write a program that retrieves the following information given the provided file
 **Requirements**
 
 Bonus: Support retrieving the information given a partial/fuzzy country code/name as input parameter, e.g. entering 'zimb' will result in 'Zimbabwe'.
-
-* The program should be written in Java.
-* Write production-ready code.
-* Document how to run the application.
-* Publish the source code into GitHub (using your own personal account) and share it with us.
-
 
 ## Prerequisites
 
@@ -52,7 +47,7 @@ To check that the image has been downloaded:
 
 	docker images
 
-Starting a MariaDB instance with the latest version is simple after setting \*user\*, \*password\* and \*password_root\*:
+Starting a MariaDB instance with the latest version is simple after setting *user*, *password* and *password_root*:
 
 	docker run --detach -p 3306:3306 --name mariadb-demo --env MARIADB_USER=[user] --env MARIADB_PASSWORD=[passowrd] --env MARIADB_ROOT_PASSWORD=[password_root]  mariadb:latest
 
@@ -72,11 +67,11 @@ To start again the container:
 
 To create the user, go to src/main/resources and launch setup.sql after setting *user* and *password*
 
-#### How to Build the project with Maven
+### How to Build the project with Maven
 
 	mvn clean install -Pdev,flywaydb
 
-There are the following Maven profiles:
+There are the following **Maven profiles**:
 
 * **local**: local environment:
 * **dev**: development environment, e.g. Docker: 
@@ -86,27 +81,27 @@ There are the following Maven profiles:
 
 Exists the **apt-maven-plugin** that makes sure that the Q-types are generated during the process goal of Maven build. The outputDirectory configuration property points to the directory where the Q-type source files will be generated. The value of this property is target/generated-sources/java.
 
-You should also add this directory to the source folders of the project, if your IDE does not do this automatically — consult the documentation for your favorite IDE on how to do that.
+*You should also add this directory to the source folders of the project, if your IDE does not do this automatically — consult the documentation for your favorite IDE on how to do that.*
 
 ### How to start the Spring Boot application with Docker
 
-Go to the folder (project root) where the dockerfile is located:
+Go to the folder (project root) where the **dockerfile** is located:
 
 	cd <base_project_path>/airports-assmnt-mariadb
 	
-Create an volume to export data to json
+**Create an volume** to export data to json
 	
 	docker volume create assmnt-volume
 	
-Create an image from the Dockerfile
+**Create an image** from the dockerfile
 	
 	docker build -t mg/airports-assmnt-mariadb-api .
 	
-Run the container from the image:
+**Run the container** from the image:
 
 	docker run -d -p 8080:8080 --mount source=assmnt-volume,target=/export/json --name airports-assmnt-mariadb-api mg/airports-assmnt-mariadb-api:latest
 	
-To explore the volume
+**To explore the volume**
 
 	docker run -it --rm -v assmnt-volume:/export/json busybox ls -l /export/json</code>
 
@@ -116,13 +111,13 @@ To explore the volume
 
 	http://localhost:8080/assessment/swagger-ui/index.html
 
-**1. To retrieve the top x countries  with the highest number of airports**
+#### 1. To retrieve the top x countries  with the highest number of airports
 
 	GET /assessment/airport/statistics/top/{limit}/countries
 	
 *Path Parameters:*
 
-* limit (required): represents the max number of airport runways that are retrieved, e.g. if you want ten countries, set {limit} to 10
+* **limit** *(required)*: represents the max number of airport runways that are retrieved, e.g. if you want ten countries, set {limit} to 10
 
 
 **2. To retrieve the runways for each airport given a country code or country name. It also works with partial/fuzzy code or name**
@@ -131,11 +126,11 @@ To explore the volume
 	
 *JSON body parameters:*
 
-* **code** (optional): represents the country code whose airport runways you would like to retrieve.
-* **name** (optional): represents the country name whose airport runways you would like to retrieve.
-* **page** (required): represents the page that is retrieved
-* **size** (required): represents the max number of airport runways that are retrieved
-* **sortBy** (required): represents the property to order for, e.g. id
+* **code** *(optional)*: represents the country code whose airport runways you would like to retrieve.
+* **name** *(optional)*: represents the country name whose airport runways you would like to retrieve.
+* **page** *(required)*: represents the page that is retrieved
+* **size** *(required)*: represents the max number of airport runways that are retrieved
+* **sortBy** *(required)*: represents the property to order for, e.g. id
 * **sortOrder** (required): represents the sort directions (asc/desc). Default: asc
 
 
