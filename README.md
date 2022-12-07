@@ -5,7 +5,7 @@
 ## Table of contents
 * [General info](#general-info)
 * [Prerequisites](#prerequisites)
-* [Setup](#setup)
+* [Setup the environment](#setup-the-environment)
 * [API Documentation](#api-documentation)
 * [Postman Collection](#postman-collection)
 
@@ -29,12 +29,13 @@ Bonus: Support retrieving the information given a partial/fuzzy country code/nam
 * Docker
 * MariaDB
 
-## Setup
-* [To install and run MariaDB with Docker](#to-install-and-run-mariadb-with-docker).
+## Setup the environment
+
+* [How to install and run MariaDB with Docker](#how-to-install-and-run-mariadb-with-docker).
 * [How to Build the project with Maven](#how-to-build-the-project-with-maven)
 * [How to start the Spring Boot application with Docker](#how-to-start-the-spring-boot-application-with-docker)
 
-### To install and run MariaDB with Docker
+### How to install and run MariaDB with Docker
 
 [Source: MariaDB docker hub](https://hub.docker.com/_/mariadb)
 
@@ -69,12 +70,12 @@ To create the user, go to src/main/resources and launch setup.sql after setting 
 
 ### How to Build the project with Maven
 
-	mvn clean install -Pdev,flywaydb
+	mvn clean install -Plocal,flywaydb
 
 There are the following **Maven profiles**:
 
-* **local**: local environment:
-* **dev**: development environment, e.g. Docker: 
+* **local**: local environment. When this profile is activated, the application reads the application-local.properties
+* **development**: development environment, e.g. Docker. When this profile is activated, the application reads the application-development.properties
 * **flywaydb**: to version the database
 * **flywaydb-clean**: to clean the database and to version the database
 
