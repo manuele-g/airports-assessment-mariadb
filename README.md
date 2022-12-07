@@ -5,7 +5,7 @@
 ## Table of contents
 * [General info](#general-info)
 * [Prerequisites](#prerequisites)
-* [Setup the environment](#setup-the-environment)
+* [Setting up the environment](#setting-up-the-environment)
 * [API Documentation](#api-documentation)
 * [Postman Collection](#postman-collection)
 
@@ -29,7 +29,7 @@ Bonus: Support retrieving the information given a partial/fuzzy country code/nam
 * Docker
 * MariaDB
 
-## Setup the environment
+## Setting up the environment
 
 * [How to install and run MariaDB with Docker](#how-to-install-and-run-mariadb-with-docker).
 * [How to Build the project with Maven](#how-to-build-the-project-with-maven)
