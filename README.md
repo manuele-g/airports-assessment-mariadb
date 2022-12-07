@@ -1,6 +1,6 @@
-#Airports Assessment Project
+# Airports Assessment Project
 
-### Simple Spring Boot app with a MariaDB
+*Simple Spring Boot app with a MariaDB*
 
 ## Table of contents
 * [General info](#general-info)
@@ -8,56 +8,83 @@
 * [Setup](#setup)
 
 ##General info
-### Description
-#### The assessment comes with 3 CSV files. The files contain data for countries, airports and runways.
-#### Write a program that retrieves the following information given the provided files:
+**Description**
+
+The assessment comes with 3 CSV files. The files contain data for countries, airports and runways.
+Write a program that retrieves the following information given the provided files:
 * Runways for each airport given a country code or country name.
 * Top 10 countries with highest number of airports.
 
-<p>Bonus: Support retrieving the information given a partial/fuzzy country code/name as input parameter, e.g. entering 'zimb' will result in 'Zimbabwe'.</p>
+**Requirements**
 
-### Requirements
-<li>The program should be written in Java.</li>
-<li>Write production-ready code.</li>
-<li>Document how to run the application.</li>
-<li>Publish the source code into GitHub (using your own personal account) and share it with us.</li>
+Bonus: Support retrieving the information given a partial/fuzzy country code/name as input parameter, e.g. entering 'zimb' will result in 'Zimbabwe'.
+
+* The program should be written in Java.
+* Write production-ready code.
+* Document how to run the application.
+* Publish the source code into GitHub (using your own personal account) and share it with us.
 
 
 ## Prerequisites
 
-<li>Java 17</li>
-<li>Apache Maven (3.8.6)</li>
-<li>Docker</li>
-<li>MariaDB</li>
+* Java 17
+* Apache Maven (3.8.6)
+* Docker
+* MariaDB
 
 ## Setup
-<h3>How to install and run MariaDB on Docker</h3>
-<a href="https://hub.docker.com/_/mariadb">MariaDB docker hub</a>
-<p>Running Docker</p>
-<p>Pull image</p>
-<code>docker pull mariadb</code>
-<p>To check that the image has been downloaded:</p>
-<code>docker images</code>
-<p>Starting a MariaDB instance with the latest version is simple after setting <user>, <password> and <password_root>:</p> 
-<code>docker run --detach -p 3306:3306 --name mariadb-demo --env MARIADB_USER=[user] --env MARIADB_PASSWORD=[passowrd] --env MARIADB_ROOT_PASSWORD=[password_root]  mariadb:latest</code>
-<p>To check that the container is running:</p>
-<code>docker ps</code>
-<p>To stop the container:</p>
-<code>docker stop mariadb-demo</code>
-<p>To start again the container:</p>
-<code>docker start mariadb-demo</code>
-<p>To create the user, go to src/main/resources and launch setup.sql after setting <user> and <password></p>
+* [To install and run MariaDB with Docker](#to-install-and-run-mariadb-with-docker).
+* [Prerequisites](#prerequisites)
+* [Setup](#setup)
 
-<h3>How to Build the project with Maven</h3>
-<code>mvn clean install -Pdev,flywaydb</code>
-<p>Exist the following Maven profiles:
-<li><b>local</b>: local environment: <code>mvn clean install -Plocal</code></li>
-<li><b>dev</b>: development environment, e.g. Docker: <code>mvn clean install -Pdev</code></li>
-<li><b>flywaydb</b>: to version the database</li>
-<li><b>flywaydb-clean</b>: to clean the database and to version the database</li>
-</p>
-<p>Exists the <b>apt-maven-plugin</b> that makes sure that the Q-types are generated during the process goal of Maven build. The outputDirectory configuration property points to the directory where the Q-type source files will be generated. The value of this property is target/generated-sources/java.
-<br>You should also add this directory to the source folders of the project, if your IDE does not do this automatically — consult the documentation for your favorite IDE on how to do that.</p>
+### To install and run MariaDB with Docker
+
+[Source: MariaDB docker hub](https://hub.docker.com/_/mariadb)
+
+To Pull the **mariadb** image:
+
+	docker pull mariadb
+
+
+To check that the image has been downloaded:
+
+	docker images
+
+Starting a MariaDB instance with the latest version is simple after setting \*user\*, \*password\* and \*password_root\*:
+
+	docker run --detach -p 3306:3306 --name mariadb-demo --env MARIADB_USER=[user] --env MARIADB_PASSWORD=[passowrd] --env MARIADB_ROOT_PASSWORD=[password_root]  mariadb:latest
+
+
+To check that the container is running:
+
+	docker ps
+
+
+To stop the container:
+
+	docker stop mariadb-demo
+
+To start again the container:
+
+	docker start mariadb-demo
+
+To create the user, go to src/main/resources and launch setup.sql after setting *user* and *password*
+
+**How to Build the project with Maven**
+
+	mvn clean install -Pdev,flywaydb
+
+Exist the following Maven profiles:
+
+* **local**: local environment: <code>mvn clean install -Plocal
+* **dev**: development environment, e.g. Docker: <code>mvn clean install -Pdev
+* **flywaydb**: to version the database
+* **flywaydb-clean**: to clean the database and to version the database
+
+
+Exists the **apt-maven-plugin** that makes sure that the Q-types are generated during the process goal of Maven build. The outputDirectory configuration property points to the directory where the Q-type source files will be generated. The value of this property is target/generated-sources/java.
+
+You should also add this directory to the source folders of the project, if your IDE does not do this automatically — consult the documentation for your favorite IDE on how to do that.
 
 <h3>How to start the Spring Boot application with Docker</h3>
 <p>Go to the folder (project root) where the dockerfile is located:</p>
