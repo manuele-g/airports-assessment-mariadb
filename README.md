@@ -89,11 +89,11 @@ Go to the folder (project root) where the **dockerfile** is located:
 
 	cd <base_project_path>/airports-assmnt-mariadb
 	
-**Create an volume** to export data to json
+**Create an volume** to export data to json:
 	
 	docker volume create assmnt-volume
 	
-**Create an image** from the dockerfile
+**Create an image** from the dockerfile:
 	
 	docker build -t mg/airports-assmnt-mariadb-api .
 	
@@ -101,7 +101,7 @@ Go to the folder (project root) where the **dockerfile** is located:
 
 	docker run -d -p 8080:8080 --mount source=assmnt-volume,target=/export/json --name airports-assmnt-mariadb-api mg/airports-assmnt-mariadb-api:latest
 	
-**To explore the volume**
+**To explore the volume**, launch the following command:
 
 	docker run -it --rm -v assmnt-volume:/export/json busybox ls -l /export/json</code>
 
@@ -111,7 +111,7 @@ Go to the folder (project root) where the **dockerfile** is located:
 
 	http://localhost:8080/assessment/swagger-ui/index.html
 
-#### 1. To retrieve the top x countries  with the highest number of airports
+**1. To retrieve the top x countries  with the highest number of airports**
 
 	GET /assessment/airport/statistics/top/{limit}/countries
 	
