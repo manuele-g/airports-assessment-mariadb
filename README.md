@@ -6,6 +6,8 @@
 * [General info](#general-info)
 * [Prerequisites](#prerequisites)
 * [Setup](#setup)
+* [API Documentation](#api-documentation)
+* [Postman Collection](#postman-collection)
 
 ##General info
 **Description**
@@ -34,12 +36,12 @@ Bonus: Support retrieving the information given a partial/fuzzy country code/nam
 
 ## Setup
 * [To install and run MariaDB with Docker](#to-install-and-run-mariadb-with-docker).
-* [Prerequisites](#prerequisites)
-* [Setup](#setup)
+* [How to Build the project with Maven](#how-to-build-the-project-with-maven)
+* [How to start the Spring Boot application with Docker](#how-to-start-the-spring-boot-application-with-docker)
 
 ### To install and run MariaDB with Docker
 
-[Source: MariaDB docker hub](https://hub.docker.com/_/mariadb/?target=_blank)
+[Source: MariaDB docker hub](https://hub.docker.com/_/mariadb)
 
 To Pull the **mariadb** image:
 
@@ -70,14 +72,14 @@ To start again the container:
 
 To create the user, go to src/main/resources and launch setup.sql after setting *user* and *password*
 
-**How to Build the project with Maven**
+#### How to Build the project with Maven
 
 	mvn clean install -Pdev,flywaydb
 
-Exist the following Maven profiles:
+There are the following Maven profiles:
 
-* **local**: local environment: <code>mvn clean install -Plocal
-* **dev**: development environment, e.g. Docker: <code>mvn clean install -Pdev
+* **local**: local environment:
+* **dev**: development environment, e.g. Docker: 
 * **flywaydb**: to version the database
 * **flywaydb-clean**: to clean the database and to version the database
 
@@ -86,51 +88,70 @@ Exists the **apt-maven-plugin** that makes sure that the Q-types are generated d
 
 You should also add this directory to the source folders of the project, if your IDE does not do this automatically — consult the documentation for your favorite IDE on how to do that.
 
-<h3>How to start the Spring Boot application with Docker</h3>
-<p>Go to the folder (project root) where the dockerfile is located:</p>
-<code>cd <base_project_path>/airports-assmnt-mariadb</code>
-<p>Create an volume to export data to json</p>
-<code>docker volume create assmnt-volume</code>
-<p>Create an image from the Dockerfile</p>
-<code>docker build -t mg/airports-assmnt-mariadb-api .</code>
-<p>Run the container from the image:</p>
-<code>docker run -d -p 8080:8080 --mount source=assmnt-volume,target=/export/json --name airports-assmnt-mariadb-api mg/airports-assmnt-mariadb-api:latest</code>
-<p>To explore the volume</p>
-<code>docker run -it --rm -v assmnt-volume:/export/json busybox ls -l /export/json</code>
+### How to start the Spring Boot application with Docker
 
-<h3>How to access Swagger UI to visualize and interact with the API’s resources:</h3>
-<code>http://localhost:8080/assessment/swagger-ui/index.html</code>
+Go to the folder (project root) where the dockerfile is located:
 
-<h2>API Documentation</h2>
+	cd <base_project_path>/airports-assmnt-mariadb
+	
+Create an volume to export data to json
+	
+	docker volume create assmnt-volume
+	
+Create an image from the Dockerfile
+	
+	docker build -t mg/airports-assmnt-mariadb-api .
+	
+Run the container from the image:
+
+	docker run -d -p 8080:8080 --mount source=assmnt-volume,target=/export/json --name airports-assmnt-mariadb-api mg/airports-assmnt-mariadb-api:latest
+	
+To explore the volume
+
+	docker run -it --rm -v assmnt-volume:/export/json busybox ls -l /export/json</code>
+
+## API Documentation
+
+*Access Swagger UI to visualize and interact with the API’s resources:*
+
+	http://localhost:8080/assessment/swagger-ui/index.html
+
+**1. To retrieve the top x countries  with the highest number of airports**
+
+	GET /assessment/airport/statistics/top/{limit}/countries
+	
+*Path Parameters:*
+
+* limit (required): represents the max number of airport runways that are retrieved, e.g. if you want ten countries, set {limit} to 10
 
 
-<h3>2. To retrieve the top x countries  with the highest number of airports</h3>
-<code>GET /assessment/airport/statistics/top/{limit}/countries</code>
-<p>Path Parameters:
-<li>limit (required): represents the max number of airport runways that are retrieved, e.g. if you want ten countries, set {limit} to 10</li>
-</p>
+**2. To retrieve the runways for each airport given a country code or country name. It also works with partial/fuzzy code or name**
 
-<h3>3. To retrieve the runways for each airport given a country code or country name. It also works with partial/fuzzy code or name</h3>
-<code>POST /assessment/aiport/statistics/given/country</code>
-<p>JSON body parameters:
-<li><b>code</b> (optional): represents the country code whose airport runways you would like to retrieve.</li>
-<li><b>name</b> (optional): represents the country name whose airport runways you would like to retrieve.</li>
-<li><b>page</b> (required): represents the page that is retrieved</li>
-<li><b>size</b> (required): represents the max number of airport runways that are retrieved</li>
-<li><b>sortBy</b> (required): represents the property to order for, e.g. id</li>
-<li><b>sortOrder</b> (required): represents the sort directions (asc/desc). Default: asc</li>
-</p>
+	POST /assessment/aiport/statistics/given/country
+	
+*JSON body parameters:*
 
-<h3>1.To Export the airports to json</h3>
-<code>GET /assessment/export/airport/json</code>
-<p>Returns true if this operation is successful</p>
+* **code** (optional): represents the country code whose airport runways you would like to retrieve.
+* **name** (optional): represents the country name whose airport runways you would like to retrieve.
+* **page** (required): represents the page that is retrieved
+* **size** (required): represents the max number of airport runways that are retrieved
+* **sortBy** (required): represents the property to order for, e.g. id
+* **sortOrder** (required): represents the sort directions (asc/desc). Default: asc
 
-<h3>1.To Export the countries to json</h3>
-<code>GET /assessment/export/countries/json</code>
-<p>Returns true if this operation is successful</p>
 
-<h2>Postman Collection</h2>
+**3.To Export the airports to json**
 
-<p>The postman collection is in the project root</p>
-<code>File: developer-assessment-mariadb.postman_collection.son</code>
+	GET /assessment/export/airport/json
+	
+Returns true if this operation is successful
+
+**4.To Export the countries to json**
+
+	GET /assessment/export/countries/json
+	
+Returns true if this operation is successful
+
+## Postman Collection
+
+The postman collection is in the project root. [Click here](https://github.com/manuele-g/airports-assessment-mariadb/blob/main/airports.assmnt-mariadb.postman_collection) to see the postman collection.
 
