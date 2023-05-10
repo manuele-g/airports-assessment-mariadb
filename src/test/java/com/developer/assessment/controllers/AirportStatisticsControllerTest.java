@@ -55,9 +55,8 @@ class AirportStatisticsControllerTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName() throws Exception {
-
-		CountryFilterDto filter = new CountryFilterDto(StringUtils.EMPTY, StringUtils.EMPTY, 0, 10, "id3", "asc1");
-
+		CountryFilterDto filter = CountryFilterDto.builder().name(StringUtils.EMPTY).code(StringUtils.EMPTY).page(0)
+				.size(10).sortBy("id3").sortOrder("asc1").build();
 		when(this.airportStatisticsService.getRunwaysByCountryCodeOrName(Mockito.any(CountryFilterDto.class)))
 				.thenReturn(Lists.newArrayList());
 
@@ -67,8 +66,8 @@ class AirportStatisticsControllerTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_fail_size_negative() throws Exception {
-
-		CountryFilterDto filter = new CountryFilterDto(StringUtils.EMPTY, StringUtils.EMPTY, 0, -1, "id2", "asc2");
+		CountryFilterDto filter = CountryFilterDto.builder().name(StringUtils.EMPTY).code(StringUtils.EMPTY).page(0)
+				.size(-1).sortBy("id2").sortOrder("asc2").build();
 
 		mvc.perform(post(PATH + "/given/country").content(new Gson().toJson(filter)).accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
@@ -76,8 +75,8 @@ class AirportStatisticsControllerTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_fail_sortBy_null() throws Exception {
-
-		CountryFilterDto filter = new CountryFilterDto(StringUtils.EMPTY, StringUtils.EMPTY, 0, 10, null, "asc3");
+		CountryFilterDto filter = CountryFilterDto.builder().name(StringUtils.EMPTY).code(StringUtils.EMPTY).page(0)
+				.size(10).sortBy(null).sortOrder("asc3").build();
 
 		mvc.perform(post(PATH + "/given/country").content(new Gson().toJson(filter)).accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
@@ -85,9 +84,8 @@ class AirportStatisticsControllerTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_fail_sortBy_blank() throws Exception {
-
-		CountryFilterDto filter = new CountryFilterDto(StringUtils.EMPTY, StringUtils.EMPTY, 0, 10, StringUtils.EMPTY,
-				"asc3");
+		CountryFilterDto filter = CountryFilterDto.builder().name(StringUtils.EMPTY).code(StringUtils.EMPTY).page(0)
+				.size(10).sortBy(StringUtils.EMPTY).sortOrder("asc3").build();
 
 		mvc.perform(post(PATH + "/given/country").content(new Gson().toJson(filter)).accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
@@ -95,8 +93,8 @@ class AirportStatisticsControllerTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_fail_sortOrder_null() throws Exception {
-
-		CountryFilterDto filter = new CountryFilterDto(StringUtils.EMPTY, StringUtils.EMPTY, 0, 10, "id1", null);
+		CountryFilterDto filter = CountryFilterDto.builder().name(StringUtils.EMPTY).code(StringUtils.EMPTY).page(0)
+				.size(10).sortBy("id1").sortOrder(null).build();
 
 		mvc.perform(post(PATH + "/given/country").content(new Gson().toJson(filter)).accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
@@ -104,9 +102,8 @@ class AirportStatisticsControllerTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_fail_sortOrder_blank() throws Exception {
-
-		CountryFilterDto filter = new CountryFilterDto(StringUtils.EMPTY, StringUtils.EMPTY, 0, 10, "id",
-				StringUtils.EMPTY);
+		CountryFilterDto filter = CountryFilterDto.builder().name(StringUtils.EMPTY).code(StringUtils.EMPTY).page(0)
+				.size(10).sortBy("id").sortOrder(StringUtils.EMPTY).build();
 
 		mvc.perform(post(PATH + "/given/country").content(new Gson().toJson(filter)).accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());

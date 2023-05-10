@@ -2,9 +2,6 @@ package com.developer.assessment.services;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,17 +14,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.developer.assessment.converters.AirportConverter;
 import com.developer.assessment.dto.AirportDto;
 import com.developer.assessment.dto.CountryFilterDto;
 import com.developer.assessment.dto.TopTenCountriesDto;
 import com.developer.assessment.entities.Airport;
 import com.developer.assessment.entities.Country;
 import com.developer.assessment.entities.QCountry;
+import com.developer.assessment.mappers.AirportMapper;
 import com.developer.assessment.repositories.AirportRepository;
 import com.google.common.collect.Lists;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
 /**
  * The Class AiportStatisticsService.
@@ -48,7 +48,7 @@ public class AirportStatisticsService implements IAirportStatisticsService {
 
 	/** The airport converter. */
 	@Autowired
-	private AirportConverter airportConverter;
+	private AirportMapper airportMapper;
 
 	/** The entity manager. */
 	@PersistenceContext
@@ -91,7 +91,7 @@ public class AirportStatisticsService implements IAirportStatisticsService {
 			}
 
 			log.info("Mapping airports from entity to dto");
-			return this.airportConverter.convertAllToEntityAttribute(airports);
+			return this.airportMapper.getAirports(airports);
 		} catch (Exception e) {
 			log.error("Erorr during exporting airports to json");
 			log.error(e.getMessage(), e);

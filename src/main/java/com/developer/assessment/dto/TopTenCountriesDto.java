@@ -1,36 +1,26 @@
 package com.developer.assessment.dto;
 
+import java.io.Serializable;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
+
 /**
  * The Class TopTenCountriesDto.
  */
-public class TopTenCountriesDto extends CountryDto {
+@Data
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+public class TopTenCountriesDto extends CountryDto implements Serializable {
+
+	private static final long serialVersionUID = -8526483357642980288L;
 
 	/** The number of airports. */
 	private Integer numberOfAirports;
 
-	/**
-	 * Instantiates a new top ten countries dto.
-	 */
 	public TopTenCountriesDto() {
 		super();
-	}
-
-	/**
-	 * Gets the number of airports.
-	 *
-	 * @return the number of airports
-	 */
-	public Integer getNumberOfAirports() {
-		return numberOfAirports;
-	}
-
-	/**
-	 * Sets the number of airports.
-	 *
-	 * @param numberOfAirports the new number of airports
-	 */
-	public void setNumberOfAirports(Integer numberOfAirports) {
-		this.numberOfAirports = numberOfAirports;
 	}
 
 }

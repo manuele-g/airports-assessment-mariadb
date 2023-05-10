@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.developer.assessment.converters.CountryConverter;
-import com.developer.assessment.converters.ExportJsonAirportJsonConverter;
 import com.developer.assessment.dto.CountryDto;
 import com.developer.assessment.dto.ExportAirportJsonDto;
 import com.developer.assessment.entities.Airport;
 import com.developer.assessment.entities.Country;
+import com.developer.assessment.mappers.CountryMapper;
+import com.developer.assessment.mappers.ExportJsonAirportJsonMapper;
 import com.developer.assessment.repositories.AirportRepository;
 import com.developer.assessment.repositories.CountryRepository;
 import com.google.common.collect.Lists;
@@ -48,11 +48,11 @@ public class ExportService implements IExportService {
 
 	/** The export json airport json converter. */
 	@Autowired
-	private ExportJsonAirportJsonConverter exportJsonAirportJsonConverter;
+	private ExportJsonAirportJsonMapper exportJsonAirportJsonMapper;
 
 	/** The country converter. */
 	@Autowired
-	private CountryConverter countryConverter;
+	private CountryMapper countryMapper;
 
 	/**
 	 * Export aiport to json data.
@@ -67,7 +67,7 @@ public class ExportService implements IExportService {
 			log.info("Calling database through airport repisitory...");
 			List<Airport> airports = this.airportRepository.findAll();
 			log.info("Mapping airports from entity to dto...");
-			airportsToExport = this.exportJsonAirportJsonConverter.convertAllToEntityAttribute(airports);
+			airportsToExport = this.exportJsonAirportJsonMapper.getExportAirports(airports);
 			log.info("airports found: {}", airportsToExport.size());
 			Gson gson = new Gson();
 			log.info("Generating gson...");
@@ -94,7 +94,7 @@ public class ExportService implements IExportService {
 			log.info("Calling database through country repisitory...");
 			List<Country> countries = this.countryRepository.findAll();
 			log.info("Mapping countries from entity to dto...");
-			countriesToExport = this.countryConverter.convertAllToEntityAttribute(countries);
+			countriesToExport = this.countryMapper.getCountries(countries);
 			log.info("countries found: {}", countriesToExport.size());
 			log.info("Generating gson...");
 			Gson gson = new Gson();

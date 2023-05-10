@@ -18,14 +18,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.developer.assessment.converters.AirportConverter;
-import com.developer.assessment.converters.CountryConverter;
-import com.developer.assessment.converters.RunwayConverter;
 import com.developer.assessment.dto.AirportDto;
 import com.developer.assessment.dto.CountryFilterDto;
 import com.developer.assessment.entities.Airport;
 import com.developer.assessment.entities.Country;
 import com.developer.assessment.entities.Runway;
+import com.developer.assessment.mappers.AirportMapper;
+import com.developer.assessment.mappers.CountryMapper;
+import com.developer.assessment.mappers.RunwayMapper;
 import com.developer.assessment.repositories.AirportRepository;
 import com.developer.assessment.repositories.CountryRepository;
 import com.google.common.collect.Lists;
@@ -40,14 +40,13 @@ class AirportStatisticsServiceTest {
 	private CountryRepository countryRepository;
 
 	@Spy
-	CountryConverter countryConverter;
+	CountryMapper countryMapper;
 
 	@Spy
-	RunwayConverter runwayConverter;
+	RunwayMapper runwayMapper;
 
 	@Spy
-	@InjectMocks
-	private AirportConverter airportConverter;
+	private AirportMapper airportMapper;
 
 	@InjectMocks
 	private AirportStatisticsService airportStatisticsService;
@@ -59,8 +58,8 @@ class AirportStatisticsServiceTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName() {
-
-		CountryFilterDto filter = new CountryFilterDto("code1", "name1", 0, 10, "id1", "asc1");
+		CountryFilterDto filter = CountryFilterDto.builder().name("code1").code("name1").page(0).size(10).sortBy("id1")
+				.sortOrder("asc1").build();
 		List<Airport> airports = createAirports();
 
 		when(this.airportRepository.findByCountryNameOrCodePartialFuzzy(Mockito.anyString(), Mockito.anyString(),
@@ -72,8 +71,8 @@ class AirportStatisticsServiceTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_case_code_is_null() {
-
-		CountryFilterDto filter = new CountryFilterDto(null, "name2", 0, 10, "id2", "asc2");
+		CountryFilterDto filter = CountryFilterDto.builder().name(null).code("name2").page(0).size(10).sortBy("id2")
+				.sortOrder("asc2").build();
 		List<Airport> airports = createAirports();
 
 		when(this.airportRepository.findByCountryNamePartialFuzzy(Mockito.anyString(), Mockito.anyInt(),
@@ -85,8 +84,8 @@ class AirportStatisticsServiceTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_case_name_is_null() {
-
-		CountryFilterDto filter = new CountryFilterDto("code3", null, 0, 10, "id3", "asc3");
+		CountryFilterDto filter = CountryFilterDto.builder().name("code3").code(null).page(0).size(10).sortBy("id3")
+				.sortOrder("asc3").build();
 		List<Airport> airports = createAirports();
 		when(this.airportRepository.findByCountryCodeOrCountryCodeStartsWith(Mockito.anyString(), Mockito.anyString(),
 				Mockito.any())).thenReturn(airports);
@@ -97,8 +96,8 @@ class AirportStatisticsServiceTest {
 
 	@Test
 	void getRunwaysByCountryCodeOrName_fail_during_call_repository() {
-
-		CountryFilterDto filter = new CountryFilterDto("code4", null, 0, 10, "id4", "asc4");
+		CountryFilterDto filter = CountryFilterDto.builder().name(null).code("code4").page(0).size(10).sortBy("id4")
+				.sortOrder("asc4").build();
 
 		when(this.airportRepository.findByCountryCodeOrCountryCodeStartsWith(Mockito.anyString(), Mockito.anyString(),
 				Mockito.any())).thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
