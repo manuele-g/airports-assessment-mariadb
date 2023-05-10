@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,9 +40,10 @@ public class AirportStatisticsController {
 	 * @return the runways by country code or name
 	 */
 	@PostMapping("/given/country")
-	public List<AirportDto> getRunwaysByCountryCodeOrName(@Validated @RequestBody CountryFilterDto filter) {
+	public ResponseEntity<List<AirportDto>> getRunwaysByCountryCodeOrName(
+			@Validated @RequestBody CountryFilterDto filter) {
 		log.info("Start getting runways given a country code or name");
-		return this.airportStatisticsService.getRunwaysByCountryCodeOrName(filter);
+		return ResponseEntity.ok(this.airportStatisticsService.getRunwaysByCountryCodeOrName(filter));
 	}
 
 	/**
@@ -51,8 +53,8 @@ public class AirportStatisticsController {
 	 * @return the top ten countries
 	 */
 	@GetMapping("/top/{limit}/countries")
-	public List<TopTenCountriesDto> getTopCountries(@PathVariable(required = true) int limit) {
+	public ResponseEntity<List<TopTenCountriesDto>> getTopCountries(@PathVariable(required = true) int limit) {
 		log.info("Start getting top {} countries with highest number of airports.", limit);
-		return this.airportStatisticsService.getTopCountries(limit);
+		return ResponseEntity.ok(this.airportStatisticsService.getTopCountries(limit));
 	}
 }

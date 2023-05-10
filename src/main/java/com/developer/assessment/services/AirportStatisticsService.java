@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 
 import com.developer.assessment.dto.AirportDto;
 import com.developer.assessment.dto.CountryFilterDto;
@@ -20,6 +18,8 @@ import com.developer.assessment.dto.TopTenCountriesDto;
 import com.developer.assessment.entities.Airport;
 import com.developer.assessment.entities.Country;
 import com.developer.assessment.entities.QCountry;
+import com.developer.assessment.enums.ErrorCodesEnum;
+import com.developer.assessment.exception.MyInternalErrorException;
 import com.developer.assessment.mappers.AirportMapper;
 import com.developer.assessment.repositories.AirportRepository;
 import com.google.common.collect.Lists;
@@ -38,9 +38,6 @@ public class AirportStatisticsService implements IAirportStatisticsService {
 
 	/** The Constant log. */
 	private static final Logger log = LoggerFactory.getLogger(AirportStatisticsService.class);
-
-	/** The Constant INTERNAL_ERROR. */
-	private static final String INTERNAL_ERROR = "Internal Error";
 
 	/** The airport repository. */
 	@Autowired
@@ -95,7 +92,7 @@ public class AirportStatisticsService implements IAirportStatisticsService {
 		} catch (Exception e) {
 			log.error("Erorr during exporting airports to json");
 			log.error(e.getMessage(), e);
-			throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new MyInternalErrorException(ErrorCodesEnum.E001.toString(), ErrorCodesEnum.E001.getMessage());
 		}
 	}
 
@@ -120,7 +117,7 @@ public class AirportStatisticsService implements IAirportStatisticsService {
 			return countries.stream().map(AirportStatisticsService::extractedColumn).toList();
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
-			throw new InternalError(INTERNAL_ERROR);
+			throw new MyInternalErrorException(ErrorCodesEnum.E001.toString(), ErrorCodesEnum.E001.getMessage());
 		}
 	}
 

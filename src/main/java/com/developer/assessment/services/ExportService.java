@@ -8,15 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 
 import com.developer.assessment.dto.CountryDto;
 import com.developer.assessment.dto.ExportAirportJsonDto;
 import com.developer.assessment.entities.Airport;
 import com.developer.assessment.entities.Country;
+import com.developer.assessment.enums.ErrorCodesEnum;
+import com.developer.assessment.exception.MyInternalErrorException;
 import com.developer.assessment.mappers.CountryMapper;
 import com.developer.assessment.mappers.ExportJsonAirportJsonMapper;
 import com.developer.assessment.repositories.AirportRepository;
@@ -77,7 +77,7 @@ public class ExportService implements IExportService {
 		} catch (Exception e) {
 			log.error("Erorr during exporting airports to json");
 			log.error(e.getMessage(), e);
-			throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new MyInternalErrorException(ErrorCodesEnum.E001.toString(), ErrorCodesEnum.E001.getMessage());
 		}
 	}
 
@@ -105,7 +105,7 @@ public class ExportService implements IExportService {
 		} catch (Exception e) {
 			log.error("Erorr during exporting countries to json");
 			log.error(e.getMessage(), e);
-			throw new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
+			throw new MyInternalErrorException(ErrorCodesEnum.E001.toString(), ErrorCodesEnum.E001.getMessage());
 		}
 	}
 

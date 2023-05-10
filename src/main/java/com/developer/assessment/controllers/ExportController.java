@@ -3,6 +3,7 @@ package com.developer.assessment.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +30,9 @@ public class ExportController {
 	 * @return the boolean
 	 */
 	@GetMapping("/airport/json")
-	public Boolean exportAiportToJsonData() {
+	public ResponseEntity<Boolean> exportAiportToJsonData() {
 		log.info("Start to export airports to json");
-		return this.exportService.exportAiportToJsonData();
+		return ResponseEntity.ok(this.exportService.exportAiportToJsonData());
 	}
 
 	/**
@@ -40,8 +41,8 @@ public class ExportController {
 	 * @return the boolean
 	 */
 	@GetMapping("/countries/json")
-	public Boolean exportCountriesToJsonData() {
+	public ResponseEntity<Boolean> exportCountriesToJsonData() {
 		log.info("Start to export contries to json");
-		return this.exportService.exportCountriesToJsonData();
+		return ResponseEntity.ok(this.exportService.exportCountriesToJsonData());
 	}
 }

@@ -23,6 +23,7 @@ import com.developer.assessment.dto.CountryFilterDto;
 import com.developer.assessment.entities.Airport;
 import com.developer.assessment.entities.Country;
 import com.developer.assessment.entities.Runway;
+import com.developer.assessment.exception.MyInternalErrorException;
 import com.developer.assessment.mappers.AirportMapper;
 import com.developer.assessment.mappers.CountryMapper;
 import com.developer.assessment.mappers.RunwayMapper;
@@ -102,7 +103,7 @@ class AirportStatisticsServiceTest {
 		when(this.airportRepository.findByCountryCodeOrCountryCodeStartsWith(Mockito.anyString(), Mockito.anyString(),
 				Mockito.any())).thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
 
-		Assertions.assertThrows(HttpClientErrorException.class, () -> {
+		Assertions.assertThrows(MyInternalErrorException.class, () -> {
 			this.airportStatisticsService.getRunwaysByCountryCodeOrName(filter);
 		});
 	}
